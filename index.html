@@ -4,9 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link href="styles.css" rel="stylesheet" />
-    <script defer src="scriptName.js"></script>
-    <title>Quiz App</title>
+    <script src="script.js"></script>
+    <title>Challenge 4 Quiz</title>
   </head>
   <body>
     <div class="container">
@@ -20,8 +19,14 @@
         </div>
       </div>
       <div class="controls">
-        <button id="start-btn" class="start-btn btn">Start</button>
-        <button id="next-btn" class="next-btn btn hide">Next</button>
+        <button id="start-btn" class="start-btn">Start Quiz</button>
+        <button id="submit-btn" class="submit-btn">Submit</button>
+        <button id="goBack-btn" class="goBack-btn">Go Back</button>
+        <button id="clear-btn" class="clear-btn">Clear High Scores</button>
+      <div class = "countdown-timer">
+        <div id = "timer" class = "hide">
+        </div>
+      </div>
       </div>
     </div>
   </body>
