@@ -2,7 +2,6 @@
 window.onload = function () {
     var startButton = document.getElementById('start-btn')
     var timer = document.getElementById('timer')
-    var questionContainerElement = document.getElementById('question-container')
     var questionElement = document.getElementById('question')
     var answerButtonsElement = document.getElementsByClassName('btn')
     var timerCount = 65
@@ -15,10 +14,11 @@ window.onload = function () {
 
 
 
+
     // Start game function which starts the game when you click it. 
     function startQuiz() {
         console.log('Game on')
-        startButton.classList.add('hide')
+        startButton.style.display = 'none'
         nextQuestion()
     }
 
@@ -41,7 +41,7 @@ window.onload = function () {
         showQuestion(quizQuestions[0])
     }
 
-    // Need to show the questions
+    // Showing the question and iterating through questions and answers. Assigning answer buttons and question buttons. 
 
     function showQuestion(question) {
         questionElement.innerText = question.question
@@ -66,9 +66,10 @@ function clearHigh() {
 
 }
 
+function tallyScores() {
 
-// Creating an event listener for when I click the start button, which will begin the quiz.
-// Create a timer that starts when I click start and am prestented with a question.
+}
+
 // If I answer the question incorrectly, I subtract time from the clock.
 // Code something that tells me when all of the questions are answered or the timer hits 0 that the game is over.
 // Ask for initials and give final score. 
@@ -81,10 +82,10 @@ var quizQuestions = [
     {
         question: "Commonly used data types do not include:",
         answer: [
-            { 1: "Strings", correct: false },
-            { 2: "Booleans", correct: false },
-            { 3: "Alerts", correct: true },
-            { 4: "Numbers", correct: false },
+            { A: "Strings", correct: false },
+            { B: "Booleans", correct: false },
+            { C: "Alerts", correct: true },
+            { D: "Numbers", correct: false },
         ]
 
     },
@@ -92,10 +93,10 @@ var quizQuestions = [
     {
         question: "Arrays in Javascript can be used to store _______",
         answer: [
-            { 1: "Numbers and strings", correct: false },
-            { 2: "Other arrays", correct: false },
-            { 3: "Booleans", correct: false },
-            { 4: "All of the above", correct: true },
+            { A: "Numbers and strings", correct: false },
+            { B: "Other arrays", correct: false },
+            { C: "Booleans", correct: false },
+            { D: "All of the above", correct: true },
 
         ]
     },
@@ -105,10 +106,10 @@ var quizQuestions = [
         question: "String values must be enclosed within when being assigned to variables _____ ",
         answer: [
 
-            { 1: "Commas", correct: false },
-            { 2: "Curly brackets", correct: false },
-            { 3: "Quotes", correct: true },
-            { 4: "Parentheses", correct: false },
+            { A: "Commas", correct: false },
+            { B: "Curly brackets", correct: false },
+            { C: "Quotes", correct: true },
+            { D: "Parentheses", correct: false },
 
         ]
     },
@@ -116,20 +117,20 @@ var quizQuestions = [
     {
         question: "The condition in an if/else statement is enclosed with _______ when being assigned to variables ",
         answer: [
-            { 1: "Quotes", correct: false },
-            { 2: "Curly brackets", correct: false },
-            { 3: "Parentheses", correct: false },
-            { 4: "Square brackets", correct: true },
+            { A: "Quotes", correct: false },
+            { B: "Curly brackets", correct: false },
+            { C: "Parentheses", correct: false },
+            { D: "Square brackets", correct: true },
         ]
     },
 
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is :",
         answer: [
-            { 1: "Terminal/bash", correct: false },
-            { 2: "Javascript", correct: false },
-            { 3: "For loops", correct: false },
-            { 4: "Console.log", correct: true },
+            { A: "Terminal/bash", correct: false },
+            { B: "Javascript", correct: false },
+            { C: "For loops", correct: false },
+            { D: "Console.log", correct: true },
         ]
     }
 ]
