@@ -2,28 +2,46 @@
 window.onload = function () {
     var startButton = document.getElementById('start-btn')
     var timer = document.getElementById('timer')
+    var questionContainerElement = document.getElementById('question-container')
+    var questionElement = document.getElementById('question')
+    var answerButtonsElement = document.getElementById('answer-buttons')
 
 
     // Event listener that hopefully starts the timer and the game on the click of startgame. 
-    startButton.addEventListener('click', startGame, startTime)
+    startButton.addEventListener('click', startGame)
+    startButton.addEventListener('click', startTime)
 
 
 
     // Start game function which starts the game when you click it. 
     function startGame() {
         console.log('Started')
+        setNextQuestion()
     }
 
     // Start time function that initializes after you click the start game button. 
 
     function startTime() {
-        timer.innerHTML = 'Time: ' + secs;
-        seconds++;
-
+        window.setInterval(startTime, 1000);
+        timer.innerHTML = 'Time: ' + '65 seconds';
         console.log('Timed')
 
     }
+
+    function showQuestion(question) {
+        questionElement.innertext = question.question
+    }
+
+    function selectAnswer() {
+
+    }
+
+    function setNextQuestion() {
+
+
+    }
 }
+
 
 
 // Creating an event listener for when I click the start button, which will begin the quiz.
@@ -33,56 +51,63 @@ window.onload = function () {
 // Ask for initials and give final score. 
 
 
-// Created a variable for questions and initialized it to an array. 
+// Created a variable to store questions and initialized it using an array. 
 
 var quizQuestions = [
     {
         question: "Commonly used data types do not include:",
-        answer: {
-            1: "Strings",
-            2: "Booleans",
-            3: "Alerts",
-            4: "Numbers"
+        answer: [
+            { 1: "Strings", correct: false },
+            { 2: "Booleans", correct: false },
+            { 3: "Alerts", correct: true },
+            { 4: "Numbers", correct: false },
+        ]
 
-        },
+    },
 
+    {
+        question: "Arrays in Javascript can be used to store _______",
+        answer: [
+            { 1: "Numbers and strings", correct: false },
+            { 2: "Other arrays", correct: false },
+            { 3: "Booleans", correct: false },
+            { 4: "All of the above", correct: true },
 
-        q: "Arrays in Javascript can be used to store _______",
+        ]
+    },
 
-        a: {
-
-            1: "Numbers and strings",
-            2: "Other arrays",
-            3: "Booleans",
-            4: "All of the above",
-
-
-
-        },
+    {
 
         q: "String values must be enclosed within when being assigned to variables _____ ",
 
-        1: "Commas",
-        2: "Curly brackets",
-        3: "Quotes",
-        4: "Parentheses",
+        answer: [
 
+            { 1: "Commas", correct: false },
+            { 2: "Curly brackets", correct: false },
+            { 3: "Quotes", correct: true },
+            { 4: "Parentheses", correct: false },
 
+        ]
+    },
 
-        q: "The condition in an if/else statement is enclosed with _______ when being assigned to variables ",
-        a: {
-            1: "Quotes",
-            2: "Curly brackets",
-            3: "Parentheses",
-            4: "Square brackets",
-        },
+    {
+        question: "The condition in an if/else statement is enclosed with _______ when being assigned to variables ",
+        answer: [
+            { 1: "Quotes", correct: false },
+            { 2: "Curly brackets", correct: false },
+            { 3: "Parentheses", correct: false },
+            { 4: "Square brackets", correct: true },
+        ]
+    },
 
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is :",
 
-        q: "A very useful tool used during development and debugging for printing content to the debugger is :",
-
-        1: "Terminal/bash",
-        2: "Javascript",
-        3: "For loops",
-        4: "Console.log",
-
-    }]
+        answer: [
+            { 1: "Terminal/bash", correct: false },
+            { 2: "Javascript", correct: false },
+            { 3: "For loops", correct: false },
+            { 4: "Console.log", correct: true },
+        ]
+    }
+]
