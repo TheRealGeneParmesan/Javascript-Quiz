@@ -5,6 +5,9 @@ window.onload = function () {
     var questionElement = document.getElementById('question')
     var answerButtonsElement = document.getElementsByClassName('btn')
     var timerCount = 65
+    var numCorrect = 0
+    var currentQuestion = 0
+    var resultsElement = document.getElementById('results')
 
 
     // Event listener that starts the timer and the game on the click of startgame. 
@@ -18,13 +21,13 @@ window.onload = function () {
     function startQuiz() {
         console.log('Game on')
         startButton.style.display = 'none'
-        firstQuestion()
+        examInSession()
     }
 
 
     // After starting game, have to go to the first question.
-    function firstQuestion() {
-        showQuestion(quizQuestions[0])
+    function examInSession() {
+        showQuestion(quizQuestions[currentQuestion])
     }
 
     // Start time function that initializes after you click the start game button. 
@@ -47,54 +50,39 @@ window.onload = function () {
         for (var i = 0; i < 4; i++) {
             console.log(i)
             answerButtonsElement[i].innerText = currentQuestion.answer[i]
-            answerButtonsElement[i].addEventListener("click", chooseAnswer(currentQuestion))
+            answerButtonsElement[i].addEventListener("click", chooseAnswer)
+            answerButtonsElement[i].buttonNum = i
+            answerButtonsElement[i].questionData = currentQuestion
         }
     }
 
 
-    // Function to highlight selected answer and determine whether it is right or wrong. If statement maybe? 
+    // The hardest shit ever to get to work. Thank you stack overflow. Had to target specific buttons as I couldn't get each answer to match the specific button. 
 
 
-    function chooseAnswer(currentQuestion) {
-        var userAnswer = ''
-        var numCorrect = 0;
+    function chooseAnswer(eventData) {
 
-        for (var i = 0; i < question.length, i++;) {
+        if (eventData.currentTarget.questionData.correctAnswer == eventData.currentTarget.buttonNum) {
 
-            userAnswer = (currentQuestion.answer[i]);
+            numCorrect++;
 
-            if (userAnswer === question[i].correctAnswer) {
-
-                numCorrect++;
-
-
-                console.log('answer chosen')
-            }
-
+            console.log('correct answer')
+            resultsElement.innerText = "You right!"
 
         }
+        else {
+            timerCount -= 10
+            console.log('no')
+            resultsElement.innerText = "Nah son!"
+        }
+        currentQuestion++
+        showQuestion(quizQuestions[currentQuestion])
     }
 
 
-    function goBack() {
-
-    }
-
-    function clearHighScore() {
-
-    }
-
-    function tallyScores() {
+    function tallyScore() {
         resultsContainer.innerHTML = numCorrect + 'out of' + question.length;
     }
-
-    // If I answer the question incorrectly, I subtract time from the clock.
-    // Code something that tells me when all of the questions are answered or the timer hits 0 that the game is over.
-    // Ask for initials and give final score. 
-
-
-    // Created a variable to store questions and initialized it using an array. 
-    // Another way to maybe show the correct answer is by adding another variable for correct variable underneath the questions. 
 
     var quizQuestions = [
         {
