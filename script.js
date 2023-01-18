@@ -57,7 +57,7 @@ window.onload = function () {
     }
 
 
-    // The hardest shit ever to get to work. Thank you stack overflow. Had to target specific buttons as I couldn't get each answer to match the specific button. 
+    // Could not get this to work. Thank you stack overflow. Had to target specific buttons as I couldn't get each answer to match the specific button. There is probably a much easier way to do this, but I couldn't get this to work for the life of me so any suggestion here would be quite helpful. 
 
 
     function chooseAnswer(eventData) {
@@ -79,10 +79,6 @@ window.onload = function () {
         showQuestion(quizQuestions[currentQuestion])
     }
 
-
-    function tallyScore() {
-        resultsContainer.innerHTML = numCorrect + 'out of' + question.length;
-    }
 
     var quizQuestions = [
         {
