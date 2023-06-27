@@ -4,30 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <script src="script.js"></script>
-    <title>Challenge 4 Quiz</title>
+    <link rel="stylesheet" href="styles.css" />
+    <h1>Simple Javascript Quiz</h1>
   </head>
   <body>
     <div class="container">
-        <div id="question">Questions</div>
-        <div id="answer-buttons"></div>
-          <button class="btn">Answer A</button>
-          <button class="btn">Answer B</button>
-          <button class="btn">Answer C</button>
-          <button class="btn">Answer D</button>
-        </div>
-      </div>
-      <div class="importantBtns">
-        <button id="start-btn" class="start-btn">Start Quiz</button>
-      <div class = "countdown-timer">
-        <div id = "timer" class = "hide">
-        </div>
-      <div class = "container">
-        <div id= "results"> 
-      </div>
-        </div>
-      </div>
+      <div id="question"></div>
+      <div id="answer-buttons">
+        <button class="btn">Answer A</button>
+        <button class="btn">Answer B</button>
+        <button class="btn">Answer C</button>
+        <button class="btn">Answer D</button>
       </div>
     </div>
+    <div class="importantBtns">
+      <button id="start-btn" class="start-btn">Start Quiz</button>
+      <div class="countdown-timer">
+        <div id="timer" class="hide"></div>
+        <div class="resultContainer">
+          <div id="results"></div>
+          <p id="tally" class="hide"></p>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>
