@@ -1,145 +1,172 @@
-//Had to add window.onload because I was getting an error that would persist with addevent listener. ElementbyId returning null before the DOM fully loads. 
 window.onload = function () {
-    var startButton = document.getElementById('start-btn')
-    var timer = document.getElementById('timer')
-    var questionElement = document.getElementById('question')
-    var answerButtonsElement = document.getElementsByClassName('btn')
-    var timerCount = 65
-    var numCorrect = 0
-    var currentQuestion = 0
-    var resultsElement = document.getElementById('results')
+    var startButton = document.getElementById('start-btn');
+    var timer = document.getElementById('timer');
+    var questionElement = document.getElementById('question');
+    var answerButtonsElement = Array.from(document.getElementsByClassName('btn'));
+    var timerCount = 65;
+    var numCorrect = 0;
+    var currentQuestion = 0;
+    var resultsElement = document.getElementById('results');
+    var tallyElement = document.getElementById('tally');
+    var intervalID; // Declare intervalID variable
 
+    // Event listener that starts the timer and the game on the click of startgame.
+    startButton.addEventListener('click', startQuiz);
+    startButton.addEventListener('click', startTime);
 
-    // Event listener that starts the timer and the game on the click of startgame. 
-    startButton.addEventListener('click', startQuiz)
-    startButton.addEventListener('click', startTime)
-
-
-
-
-    // Start game function which starts the game when you click it. 
     function startQuiz() {
-        console.log('Game on')
-        startButton.style.display = 'none'
-        examInSession()
+        console.log('Game on');
+        startButton.style.display = 'none';
+        showAnswerButtons();
+        examInSession();
     }
 
+    function showAnswerButtons() {
+        for (var i = 0; i < answerButtonsElement.length; i++) {
+            answerButtonsElement[i].style.display = 'block';
+        }
+    }
 
-    // After starting game, have to go to the first question.
     function examInSession() {
-        showQuestion(quizQuestions[currentQuestion])
+        showQuestion(quizQuestions[currentQuestion]);
     }
-
-    // Start time function that initializes after you click the start game button. 
 
     function startTime() {
-
-        var intervalID = setInterval(() => {
-            if (timerCount <= 0) { clearInterval(intervalID) }
+        intervalID = setInterval(() => {
+            if (timerCount <= 0) {
+                clearInterval(intervalID);
+                endQuiz();
+            }
             timer.innerHTML = 'Time: ' + timerCount + ' seconds';
-            timerCount--
+            timerCount--;
         }, 1000);
-        console.log('Timer on')
+        console.log('Timer on');
 
+        // Show the timer and results
+        timer.classList.add('show');
+        resultsElement.classList.add('show');
+        tallyElement.classList.add('show');
     }
 
-    // Showing the question and iterating through questions and answers. Assigning answer buttons and question buttons. 
-
-    function showQuestion(currentQuestion) {
-        questionElement.innerText = currentQuestion.question
+    function showQuestion(question) {
+        questionElement.innerText = question.question;
         for (var i = 0; i < 4; i++) {
-            console.log(i)
-            answerButtonsElement[i].innerText = currentQuestion.answer[i]
-            answerButtonsElement[i].addEventListener("click", chooseAnswer)
-            answerButtonsElement[i].buttonNum = i
-            answerButtonsElement[i].questionData = currentQuestion
+            answerButtonsElement[i].innerText = question.answer[i];
+
+            // Remove previous event listener
+            answerButtonsElement[i].removeEventListener('click', chooseAnswer);
+
+            // Add new event listener with proper assignment
+            answerButtonsElement[i].addEventListener('click', chooseAnswer);
+            answerButtonsElement[i].buttonNum = i;
+            answerButtonsElement[i].questionData = question;
         }
     }
-
-
-    // Could not get this to work. Thank you stack overflow. Had to target specific buttons as I couldn't get each answer to match the specific button. There is probably a much easier way to do this, but I couldn't get this to work for the life of me so any suggestion here would be quite helpful. 
-
 
     function chooseAnswer(eventData) {
-
-        if (eventData.currentTarget.questionData.correctAnswer == eventData.currentTarget.buttonNum) {
-
+        if (
+            eventData.currentTarget.questionData.correctAnswer ===
+            eventData.currentTarget.buttonNum
+        ) {
             numCorrect++;
-
-            console.log('correct answer')
-            resultsElement.innerText = "You right!"
-
+            console.log('correct answer');
+            resultsElement.innerText = 'You Got it Right!';
+            tallyElement.innerHTML = 'You Got ' + numCorrect + ' Right!';
+        } else {
+            timerCount -= 10;
+            console.log('no');
+            resultsElement.innerText = 'Nah son!';
         }
-        else {
-            timerCount -= 10
-            console.log('no')
-            resultsElement.innerText = "Nah son!"
+
+        // Remove event listeners from answer buttons
+        for (var i = 0; i < answerButtonsElement.length; i++) {
+            answerButtonsElement[i].removeEventListener('click', chooseAnswer);
         }
-        currentQuestion++
-        showQuestion(quizQuestions[currentQuestion])
+
+        if (currentQuestion < quizQuestions.length - 1) {
+            currentQuestion++; // Increment currentQuestion here
+            showQuestion(quizQuestions[currentQuestion]);
+        } else {
+            endQuiz();
+        }
     }
 
+    function endQuiz() {
+        console.log('Quiz finished');
+        // Disable answer buttons
+        for (var i = 0; i < answerButtonsElement.length; i++) {
+            answerButtonsElement[i].disabled = true;
+        }
+
+        // Display performance message
+        var performanceMessage = '';
+        if (numCorrect >= 4) {
+            performanceMessage = 'You Did great!';
+        } else {
+            performanceMessage = 'Better Luck Next Time!';
+        }
+        resultsElement.innerText = performanceMessage;
+
+        // Stop the timer
+        clearInterval(intervalID);
+
+        // Clear out the last question and answers
+        questionElement.innerText = '';
+        for (var i = 0; i < answerButtonsElement.length; i++) {
+            answerButtonsElement[i].style.display = 'none';
+        }
+    }
 
     var quizQuestions = [
         {
-            question: "Commonly used data types do not include:",
+            question: 'Commonly used data types do not include:',
             answer: {
-                0: "Strings",
-                1: "Booleans",
-                2: "Alerts",
-                3: "Numbers",
+                '0': 'Strings',
+                '1': 'Booleans',
+                '2': 'Alerts',
+                '3': 'Numbers',
             },
-            correctAnswer: "2"
-
+            correctAnswer: 2,
         },
-
         {
-            question: "Arrays in Javascript can be used to store _______",
+            question: 'Arrays in Javascript can be used to store _______',
             answer: {
-                0: "Numbers and strings",
-                1: "Other arrays",
-                2: "Booleans",
-                3: "All of the above",
-
+                '0': 'Numbers and strings',
+                '1': 'Other arrays',
+                '2': 'Booleans',
+                '3': 'All of the above',
             },
-            correctAnswer: "3"
-
+            correctAnswer: 3,
         },
-
         {
-
-            question: "String values must be enclosed within when being assigned to variables _____ ",
+            question: 'String values must be enclosed within when being assigned to variables _____ ',
             answer: {
-
-                0: "Commas",
-                1: "Curly brackets",
-                2: "Quotes",
-                3: "Parentheses"
-
+                '0': 'Commas',
+                '1': 'Curly brackets',
+                '2': 'Quotes',
+                '3': 'Parentheses',
             },
-            correctAnswer: "2"
+            correctAnswer: 2,
         },
-
         {
-            question: "The condition in an if/else statement is enclosed with _______ when being assigned to variables ",
+            question: 'The condition in an if/else statement is enclosed with _______ when being assigned to variables ',
             answer: {
-                0: "Quotes",
-                1: "Curly brackets",
-                2: "Parentheses",
-                3: "Square brackets",
+                '0': 'Quotes',
+                '1': 'Curly brackets',
+                '2': 'Parentheses',
+                '3': 'Square brackets',
             },
-            correctAnswer: "2"
+            correctAnswer: 2,
         },
-
         {
-            question: "A very useful tool used during development and debugging for printing content to the debugger is :",
+            question: 'A very useful tool used during development and debugging for printing content to the debugger is :',
             answer: {
-                0: "Terminal/bash",
-                1: "Javascript",
-                2: "For loops",
-                3: "Console.log",
+                '0': 'Terminal/bash',
+                '1': 'Javascript',
+                '2': 'For loops',
+                '3': 'Console.log',
             },
-            correctAnswer: "3"
-        }
-    ]
-}
+            correctAnswer: 3,
+        },
+    ];
+};
